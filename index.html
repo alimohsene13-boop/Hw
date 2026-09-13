@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>برنامه‌ریز درسی هوشمند</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- هدر -->
+  <header class="app-header">
+    <div class="logo">📚 برنامه‌ریز درسی هوشمند</div>
+    <button id="themeToggle" class="icon-btn" title="تغییر تم">🌙</button>
+  </header>
+
+  <!-- نوار پیشرفت -->
+  <div class="progress-wrap" id="progressWrap">
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-label" id="progressLabel">مرحله ۱ از ۱۰</div>
+  </div>
+
+  <main id="mainArea">
+
+    <!-- ===================== ویزارد ===================== -->
+    <section id="wizard" class="wizard">
+
+      <!-- مرحله ۱ -->
+      <div class="step" data-step="1">
+        <h2>۱. اطلاعات پایه</h2>
+        <p class="hint">هدف و مقطع تحصیلی خود را مشخص کنید</p>
+        <div class="grid-options" data-field="maghta">
+          <div class="opt-card" data-value="dabirestan">دبیرستان</div>
+          <div class="opt-card" data-value="konkoor">داوطلب کنکور</div>
+          <div class="opt-card" data-value="daneshgah">دانشگاه</div>
+          <div class="opt-card" data-value="azad">یادگیری آزاد</div>
+        </div>
+        <div class="grid-options" data-field="hadaf">
+          <div class="opt-card" data-value="emtehan">قبولی در امتحان</div>
+          <div class="opt-card" data-value="konkoor_hadaf">رتبه کنکور</div>
+          <div class="opt-card" data-value="yadgiri">یادگیری عمومی</div>
+          <div class="opt-card" data-value="tarmim">جبران عقب‌افتادگی</div>
+        </div>
+      </div>
+
+      <!-- مرحله ۲ -->
+      <div class="step" data-step="2">
+        <h2>۲. لیست دروس و اولویت</h2>
+        <p class="hint">دروس خود را وارد کرده و اولویت هرکدام را مشخص کنید</p>
+        <div class="subject-input-row">
+          <input type="text" id="subjectName" placeholder="نام درس (مثلاً ریاضی)">
+          <select id="subjectPriority">
+            <option value="3">اولویت بالا</option>
+            <option value="2" selected>اولویت متوسط</option>
+            <option value="1">اولویت پایین</option>
+          </select>
+          <button id="addSubjectBtn" class="btn-small">افزودن</button>
+        </div>
+        <ul id="subjectList" class="subject-list"></ul>
+      </div>
+
+      <!-- مرحله ۳ -->
+      <div class="step" data-step="3">
+        <h2>۳. سطح فعلی در هر درس</h2>
+        <p class="hint">وضعیت خود را در هر درس مشخص کنید</p>
+        <div id="levelContainer" class="level-container"></div>
+      </div>
+
+      <!-- مرحله ۴ -->
+      <div class="step" data-step="4">
+        <h2>۴. زمان در دسترس</h2>
+        <div class="grid-options" data-field="hoursPerDay">
+          <div class="opt-card" data-value="1">تا ۱ ساعت</div>
+          <div class="opt-card" data-value="2">۲ تا ۳ ساعت</div>
+          <div class="opt-card" data-value="4">۴ تا ۶ ساعت</div>
+          <div class="opt-card" data-value="7">بیش از ۶ ساعت</div>
+        </div>
+        <p class="hint">اوج تمرکز شما در چه زمانی از روز است؟</p>
+        <div class="grid-options" data-field="peakFocus">
+          <div class="opt-card" data-value="sobh">صبح زود</div>
+          <div class="opt-card" data-value="rooz">ظهر / بعدازظهر</div>
+          <div class="opt-card" data-value="asr">عصر</div>
+          <div class="opt-card" data-value="shab">شب</div>
+        </div>
+      </div>
+
+      <!-- مرحله ۵ -->
+      <div class="step" data-step="5">
+        <h2>۵. سبک یادگیری</h2>
+        <div class="grid-options" data-field="learningStyle">
+          <div class="opt-card" data-value="basari">بصری (تصویر و نمودار)</div>
+          <div class="opt-card" data-value="shenidari">شنیداری (پادکست، توضیح صوتی)</div>
+          <div class="opt-card" data-value="amali">عملی (حل تمرین و تست)</div>
+          <div class="opt-card" data-value="khandan">خواندن و نوشتن خلاصه</div>
+        </div>
+      </div>
+
+      <!-- مرحله ۶ -->
+      <div class="step" data-step="6">
+        <h2>۶. مهلت زمانی</h2>
+        <p class="hint">چند روز تا هدف نهایی (امتحان/کنکور) باقی مانده؟</p>
+        <input type="number" id="daysLeft" min="1" max="365" placeholder="تعداد روز" class="text-input">
+        <input type="date" id="targetDate" class="text-input">
+      </div>
+
+      <!-- مرحله ۷ -->
+      <div class="step" data-step="7">
+        <h2>۷. روش مرور ترجیحی</h2>
+        <div class="grid-options" data-field="reviewMethod">
+          <div class="opt-card" data-value="spaced">تکرار فاصله‌دار</div>
+          <div class="opt-card" data-value="pomodoro">پومودورو (۲۵ دقیقه‌ای)</div>
+          <div class="opt-card" data-value="block">بلوکی (۹۰ دقیقه‌ای)</div>
+          <div class="opt-card" data-value="mixed">ترکیبی</div>
+        </div>
+      </div>
+
+      <!-- مرحله ۸ -->
+      <div class="step" data-step="8">
+        <h2>۸. محدودیت‌ها</h2>
+        <div class="grid-options multi" data-field="constraints">
+          <div class="opt-card" data-value="varzesh">فعالیت ورزشی روزانه</div>
+          <div class="opt-card" data-value="kar">شغل جانبی</div>
+          <div class="opt-card" data-value="khabkam">کمبود خواب</div>
+          <div class="opt-card" data-value="none">محدودیت خاصی ندارم</div>
+        </div>
+      </div>
+
+      <!-- مرحله ۹ -->
+      <div class="step" data-step="9">
+        <h2>۹. سطح انگیزه</h2>
+        <div class="grid-options" data-field="motivation">
+          <div class="opt-card" data-value="low">پایین - نیاز به یادآوری زیاد</div>
+          <div class="opt-card" data-value="mid">متوسط</div>
+          <div class="opt-card" data-value="high">بالا - خودانگیخته هستم</div>
+        </div>
+      </div>
+
+      <!-- مرحله ۱۰ -->
+      <div class="step" data-step="10">
+        <h2>۱۰. ظاهر برنامه</h2>
+        <div class="grid-options" data-field="colorTheme">
+          <div class="opt-card" data-value="blue">آبی</div>
+          <div class="opt-card" data-value="green">سبز</div>
+          <div class="opt-card" data-value="purple">بنفش</div>
+          <div class="opt-card" data-value="orange">نارنجی</div>
+        </div>
+      </div>
+
+      <div class="wizard-nav">
+        <button id="prevBtn" class="btn-outline">قبلی</button>
+        <button id="nextBtn" class="btn-primary">بعدی</button>
+        <button id="generateBtn" class="btn-primary hidden">🚀 ساخت برنامه</button>
+      </div>
+    </section>
+
+    <!-- ===================== نتیجه ===================== -->
+    <section id="resultArea" class="result-area hidden">
+      <div class="result-header">
+        <h2>برنامه اختصاصی شما آماده شد ✅</h2>
+        <div class="result-actions">
+          <button id="editBtn" class="btn-outline">ویرایش پاسخ‌ها</button>
+          <button id="printBtn" class="btn-outline">🖨 چاپ</button>
+        </div>
+      </div>
+
+      <div class="tabs" id="tabs">
+        <button class="tab-btn active" data-tab="weekly">جدول هفتگی</button>
+        <button class="tab-btn" data-tab="monthly">تقویم ماهانه</button>
+        <button class="tab-btn" data-tab="charts">نمودارها</button>
+        <button class="tab-btn" data-tab="priority">اولویت دروس</button>
+        <button class="tab-btn" data-tab="pomodoro">پومودورو</button>
+        <button class="tab-btn" data-tab="spaced">مرور فاصله‌دار</button>
+        <button class="tab-btn" data-tab="checklist">چک‌لیست روزانه</button>
+        <button class="tab-btn" data-tab="analysis">تحلیل قوت/ضعف</button>
+        <button class="tab-btn" data-tab="resources">منابع پیشنهادی</button>
+        <button class="tab-btn" data-tab="examnight">شب امتحان</button>
+        <button class="tab-btn" data-tab="holiday">برنامه تعطیلات</button>
+        <button class="tab-btn" data-tab="pie">نمودار سهم دروس</button>
+        <button class="tab-btn" data-tab="gamify">امتیاز و گیمیفیکیشن</button>
+        <button class="tab-btn" data-tab="notes">یادداشت‌ها</button>
+        <button class="tab-btn" data-tab="alerts">هشدار عقب‌ماندگی</button>
+        <button class="tab-btn" data-tab="report">گزارش نهایی</button>
+      </div>
+
+      <div class="tab-content" id="tabContent"></div>
+    </section>
+
+  </main>
+
+  <footer class="app-footer">ساخته‌شده برای برنامه‌ریزی درسی هوشمند — تمام داده‌ها فقط روی مرورگر شما ذخیره می‌شود</footer>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
